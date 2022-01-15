@@ -71,7 +71,7 @@ export class UserService {
                         "loginResult": {
                             "success": true,
                             "successData": {
-                                "id": result._id,
+                                "_id": result._id,
                                 "email": result.username,
                                 "username": result.username
                             },

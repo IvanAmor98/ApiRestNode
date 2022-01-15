@@ -1,13 +1,13 @@
 import express from 'express';
-import https, { ServerOptions } from 'https';
 import http from 'http';
-import fs from 'fs';
 import { json } from 'body-parser';
 import { globalRouter } from './router/router';
-import pem from 'pem';
-import os from 'process';
-import path from 'path';
-import cors from 'cors';
+//import https, { ServerOptions } from 'https';
+//import fs from 'fs';
+//import pem from 'pem';
+//import os from 'process';
+//import path from 'path';
+//import cors from 'cors';
 
 const app = express();
 const router = express.Router();
@@ -16,7 +16,7 @@ const httpsPort = 8443;
 
 router.use('/api', globalRouter);
 
-app.use(cors());
+//app.use(cors());
 app.use(express.static(__dirname + '/public'));
 app.use(json());
 app.use(router);
@@ -26,7 +26,7 @@ httpServer.listen(httpPort, () => {
     console.log('http listening on port %s...', httpPort);
 });
 
-if (os.platform === 'win32') {
+/*if (os.platform === 'win32') {
     process.env.OPENSSL_CONF = path.join(__dirname, 'openssl', 'windows', 'openssl.cnf');
     pem.config({
       pathOpenSSL: path.join(__dirname, 'openssl', 'windows', 'openssl.exe')
@@ -48,5 +48,5 @@ pem.createCertificate(certProps, (error: any, keys: any) => {
     httpsServer.listen(httpsPort, () => {
         console.log('https listening on port %s...', httpsPort);
     });
-  });
+});*/
 
