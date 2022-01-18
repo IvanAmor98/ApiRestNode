@@ -18,12 +18,12 @@ export class BookingService {
         Booking.create(newBooking).then(
             succes => {
                 res.json({
-                    "bookingResult": {"success": true}
+                    "result": {"success": true}
                 });
             }, error => {
                 console.log("ERROR: " + error);
                 res.json({
-                    "bookingResult": {
+                    "result": {
                         "success": false,
                         "error": true,
                         "errorData": error
@@ -43,13 +43,13 @@ export class BookingService {
                 console.log(times);
                 
                 res.json({
-                    "bookingResult": {
+                    "result": {
                         "times": times
                     }
                 });
             } else {
                 res.json({
-                    "bookingResult": {
+                    "result": {
                         "times": []
                     }
                 });
@@ -65,7 +65,7 @@ export class BookingService {
                 console.log(result);
                 
                 res.json({
-                    "bookingResult": {
+                    "result": {
                         "bookings": result
                     }
                 });
@@ -73,7 +73,7 @@ export class BookingService {
                 console.log("No bookings found");
                 
                 res.json({
-                    "bookingResult": {
+                    "result": {
                         "bookigns": null,
                         "errorData": "No bookings found"
                     }
@@ -89,7 +89,7 @@ export class BookingService {
             if (error) {
                 console.log(error);
                 res.json({
-                    "bookingResult": {
+                    "result": {
                         "deleted": false,
                         "errorData": error
                     }
@@ -98,7 +98,7 @@ export class BookingService {
             if (result) {
                 console.log(result);
                 res.json({
-                    "bookingResult": {
+                    "result": {
                         "deleted": true,
                         "resultData": result
                     }
@@ -114,7 +114,7 @@ export class BookingService {
             if (error) {
                 console.log(error);
                 res.json({
-                    "bookingResult": {
+                    "result": {
                         "updated": false,
                         "errorData": error
                     }
@@ -123,7 +123,7 @@ export class BookingService {
             if (result) {
                 console.log(result);
                 res.json({
-                    "bookingResult": {
+                    "result": {
                         "updated": true,
                         "resultData": result
                     }

@@ -19,7 +19,7 @@ globalRouter.post('/user/login', (req, res) => {
     userService.checkUserCredentials(req, res).catch(err => console.log(err));
 });
 
-globalRouter.get('/facility/list', (req, res) => {
+globalRouter.post('/facility/list', (req, res) => {
     facilityService.getAll(req, res).catch(err => console.log(err));
 });
 

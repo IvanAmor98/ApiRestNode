@@ -15,7 +15,7 @@ export class UserService {
             if (error) {
                 console.log("ERROR: " + error);
                 res.status(200).json({
-                    "signupResult": {
+                    "result": {
                         "alreadyExists": false,
                         "error": error
                     }
@@ -25,12 +25,12 @@ export class UserService {
                 User.create(newUser).then(
                     succes => {
                         res.json({
-                            "signupResult": {"alreadyExists": false}
+                            "result": {"alreadyExists": false}
                         });
                     }, error => {
                         console.log("ERROR: " + error);
                         res.json({
-                            "signupResult": {
+                            "result": {
                                 "alreadyExists": false,
                                 "error": error
                             }
@@ -40,7 +40,7 @@ export class UserService {
             } else {
                 console.log("RESULT: " + result);
                 res.status(200).json({
-                    "signupResult": {
+                    "result": {
                         "alreadyExists": true
                     }
                 });
@@ -56,7 +56,7 @@ export class UserService {
                 console.log(error);
                 
                 res.status(200).json({
-                    "loginResult": {
+                    "result": {
                         "success": false,
                         "error": true,
                         "errorData": error
@@ -68,7 +68,7 @@ export class UserService {
                 
                 if (req.body.password == result.password) {
                     res.status(200).json({
-                        "loginResult": {
+                        "result": {
                             "success": true,
                             "successData": {
                                 "_id": result._id,
@@ -81,7 +81,7 @@ export class UserService {
                 } else {
                     console.log("No encontrado");
                     res.status(200).json({
-                        "loginResult": {
+                        "result": {
                             "success": false,
                             "error": true,
                             "errorData": "Invalid credentials"
@@ -91,7 +91,7 @@ export class UserService {
             } else {
                 console.log("No encontrado");
                 res.status(200).json({
-                    "loginResult": {
+                    "result": {
                         "success": false,
                         "error": true,
                         "errorData": "User not found"
