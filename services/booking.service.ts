@@ -4,8 +4,6 @@ import date from 'date-and-time';
 export class BookingService {
 
     public async save(req: any, res: any) {
-        console.log("Save:" + req.body.facilityName);
-        
         const newBooking = new Booking({
             user: req.body.userId,
             facility: req.body.facilityId,
@@ -40,7 +38,6 @@ export class BookingService {
                 result.forEach((element: BookingInterface) => {
                     times.push([element.timeFrom!, element.timeTo!]);
                 });
-                console.log(times);
                 
                 res.json({
                     "result": {
@@ -58,12 +55,8 @@ export class BookingService {
     }
 
     public async getAllByUser(req: any, res: any) {
-        console.log(req.body);
-        
         Booking.find({user: req.body.userId}, null, {sort: {date: 1, timeFrom: 1}}, (error: any, result: any) => {
             if (result != null) {
-                console.log(result);
-                
                 res.json({
                     "result": {
                         "bookings": result
@@ -71,7 +64,6 @@ export class BookingService {
                 });
             } else {
                 console.log("No bookings found");
-                
                 res.json({
                     "result": {
                         "bookigns": null,
@@ -83,8 +75,6 @@ export class BookingService {
     }
 
     public async deleteById(req: any, res: any) {
-        console.log(req.body);
-        
         Booking.deleteOne({_id: req.body._id}, (error: any, result: any) => {
             if (error) {
                 console.log(error);
@@ -96,7 +86,6 @@ export class BookingService {
                 });
             } 
             if (result) {
-                console.log(result);
                 res.json({
                     "result": {
                         "deleted": true,
@@ -108,8 +97,6 @@ export class BookingService {
     }
 
     public async updatePaidById(req: any, res: any) {
-        console.log(req.body);
-        
         Booking.findOneAndUpdate({_id: req.body._id}, {$set: { paid: req.body.paid }}, (error: any, result: any) => {
             if (error) {
                 console.log(error);
@@ -121,7 +108,6 @@ export class BookingService {
                 });
             } 
             if (result) {
-                console.log(result);
                 res.json({
                     "result": {
                         "updated": true,

@@ -3,13 +3,11 @@ import { Facility } from "../schemas";
 export class FacilityService {
 
     public async getAll(req: any, res: any) {
-        console.log(req);
         Facility.find({}, (error: any, result: any) => {
             if (error) {
                 console.log(error);
                 res.json({"result": null});
             } else {
-                console.log(result);
                 res.json({"result": {
                     "facilityListResult": result
                 }});
