@@ -1,13 +1,18 @@
 import { User } from './../schemas'
 import jwt from 'jsonwebtoken';
+import { OAuth2Client } from 'google-auth-library';
+import mongoose from 'mongoose';
 
 export class UserService {
+
+    client = new OAuth2Client('398083326352-15014911vi45dfqc5c6v29q6ut5hc8cm.apps.googleusercontent.com');
 
     public async addUser(req: any, res: any) {
         const newUser = new User({
             email: req.body.email,
             username: req.body.username,
-            password: req.body.password
+            password: req.body.password,
+            isGoogleAccount: false
         });
 
         User.findOne({email: newUser.email}, (error: any, result: any) => {
@@ -67,7 +72,7 @@ export class UserService {
                             "success": true,
                             "successData": {
                                 "_id": result._id,
-                                "email": result.username,
+                                "email": result.email,
                                 "username": result.username,
                                 "token": token
                             },
@@ -98,10 +103,13 @@ export class UserService {
     }
 
     public async checkGoogleCredentials(req: any, res: any) {
-        User.findOneAndUpdate(req.body.googleToken, {$set: {name: 'SOME_VALUE'}}, {upsert: true}, (error: any, result: any) => {
+        const userId = await this.verifyGoogleToken(req.body.googleToken);
+        
+        User.findOneAndUpdate({googleId: userId, isGoogleAccount: true},
+          {$set: {email: req.body.email, username: req.body.email, password: req.body.password}},
+          {upsert: true, new: true}, (error: any, result: any) => {
             if (error) {
                 console.log(error);
-                
                 res.status(200).json({
                     "result": {
                         "success": false,
@@ -111,30 +119,19 @@ export class UserService {
                 });
             }
             if (result) {
-                if (req.body.password == result.password) {
-                    const token = jwt.sign({ _id: result._id }, 'secretKey')
-                    res.status(200).json({
-                        "result": {
-                            "success": true,
-                            "successData": {
-                                "_id": result._id,
-                                "email": result.username,
-                                "username": result.username,
-                                "token": token
-                            },
-                            "error": false
-                        }
-                    });
-                } else {
-                    console.log("No encontrado");
-                    res.status(200).json({
-                        "result": {
-                            "success": false,
-                            "error": true,
-                            "errorData": "Invalid credentials"
-                        }
-                    });
-                }
+                const token = jwt.sign({ _id: result._id }, 'secretKey');
+                res.status(200).json({
+                    "result": {
+                        "success": true,
+                        "successData": {
+                            "_id": result._id,
+                            "email": result.email,
+                            "username": result.email,
+                            "token": token
+                        },
+                        "error": false
+                    }
+                });    
             } else {
                 console.log("No encontrado");
                 res.status(200).json({
@@ -146,5 +143,21 @@ export class UserService {
                 });
             }
         });
+    }
+
+    public async verifyGoogleToken(googleToken: string): Promise<string> {
+        const ticket = await this.client.verifyIdToken({
+            idToken: googleToken,
+            audience: '398083326352-mcce8uhaf9golv4h6avm65uneijtljt7.apps.googleusercontent.com',  // Specify the CLIENT_ID of the app that accesses the backend
+            // Or, if multiple clients access the backend:
+            //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
+        });
+        const payload = ticket.getPayload();
+        if (!!payload) {
+            return payload.sub
+        }
+        // If request specified a G Suite domain:
+        // const domain = payload['hd'];
+        return '';
     }
 }

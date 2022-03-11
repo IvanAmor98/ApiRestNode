@@ -54,13 +54,11 @@ globalRouter.post('/booking/updatePaidById', verifyToken, (req, res) => {
 
 function verifyToken(req: any, res: any, next: any) {
     if (!req.headers.authorization) return res.status(401).send("Necesita estar logeado para ver este contenido");
-    console.log(req.headers.authorization);
 
     const token = req.headers.authorization.split(' ')[1];
     if (!token) return res.status(401).send("Necesita estar logeado para ver este contenido");
     const payLoad = jwt.verify(token, 'secretKey');
 
-    console.log("Payload: " + payLoad);
     req.body.token = payLoad;
 
     next();
