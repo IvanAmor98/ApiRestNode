@@ -2,6 +2,7 @@ import { Facility } from "../schemas";
 
 export class FacilityService {
 
+    //Devuelve la lista de todas las instalaciones
     public async getAll(req: any, res: any) {
         Facility.find({}, (error: any, result: any) => {
             if (error) {
@@ -15,6 +16,7 @@ export class FacilityService {
         });
     }
 
+    //Devuelve la instalacion con el id especificado
     public async getById(req: any, res: any) {
         Facility.findOne({_id: req.body.id}, (error: any, result: any) => {
             if (error) {

@@ -1,7 +1,7 @@
 import express from 'express';
 import http from 'http';
 import { json } from 'body-parser';
-import { globalRouter } from './router/router';
+import { userRouter, bookingRouter, facilityRouter } from './router/';
 //import https, { ServerOptions } from 'https';
 //import fs from 'fs';
 //import pem from 'pem';
@@ -9,18 +9,25 @@ import { globalRouter } from './router/router';
 //import path from 'path';
 //import cors from 'cors';
 
+//Inicializa los servicios importados
 const app = express();
 const router = express.Router();
+
 const httpPort = 8080;
 const httpsPort = 8443;
 
-router.use('/api', globalRouter);
+//Asigna las rutas
+router.use('/api/user', userRouter);
+router.use('/api/booking', bookingRouter);
+router.use('/api/facility', facilityRouter);
 
+//Configura el servidor http
 //app.use(cors());
 app.use(express.static(__dirname + '/public'));
 app.use(json());
 app.use(router);
 
+//Inicializa el servidor y lo abre
 const httpServer = http.createServer(app);
 httpServer.listen(httpPort, () => {
     console.log('http listening on port %s...', httpPort);
