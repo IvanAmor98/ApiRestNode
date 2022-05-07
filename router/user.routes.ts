@@ -13,9 +13,11 @@ userRouter.post('/signup', (req, res) => {
 });
 
 userRouter.post('/login', (req, res) => {
+    console.log(req.body);
     userService.checkUserCredentials(req, res).catch(err => console.log(err));
 });
 
 userRouter.post('/googleLogin', (req, res) => {
+    console.log(req.body);
     userService.checkGoogleCredentials(req, res).catch(err => console.log(err));
 });

@@ -7,6 +7,7 @@ export interface BookingInterface {
     user?: string,
     facility?: string,
     facilityName?: string,
+    type?: number,
     timeFrom?: number,
     timeTo?: number,
     paid?: boolean
@@ -18,6 +19,7 @@ class BookingClass implements BookingInterface {
     user?: string;
     facility?: string;
     facilityName?: string;
+    type?: number;
     timeFrom?: number;
     timeTo?: number;
     paid?: boolean;
@@ -28,6 +30,7 @@ const bookingSchema = new mongoose.Schema({
     user: {type: Schema.Types.ObjectId, ref: 'User'},
     facility: {type: Schema.Types.ObjectId, ref: 'Facility'},
     facilityName: {type: String},
+    type: {type: Number},
     timeFrom: {type: Number},
     timeTo: {type: Number},
     paid: {type: Boolean}

@@ -10,6 +10,7 @@ export class BookingService {
             user: req.body.userId,
             facility: req.body.facilityId,
             facilityName: req.body.facilityName,
+            type: req.body.type,
             timeFrom: req.body.timeFrom,
             timeTo: req.body.timeTo,
             paid: req.body.paid
@@ -38,7 +39,7 @@ export class BookingService {
     }
 
     public async getReservedTimes(req: any, res: any) {
-        Booking.find({timeFrom: {$gte: req.body.from, $lte: req.body.to}}, (error: any, result: any) => {
+        Booking.find({timeFrom: {$gte: req.body.from, $lte: req.body.to}, type: req.body.type}, (error: any, result: any) => {
             if (result != null) {
                 const times: [Number, Number][] = [];
                 result.forEach((element: BookingInterface) => {
@@ -60,9 +61,9 @@ export class BookingService {
         });
     }
 
-    //Devuelve todas las reservas del usuario especificado
+    //Devuelve todas las reservas pendientes del usuario especificado
     public async getAllByUser(req: any, res: any) {
-        Booking.find({user: req.body.userId}, null, {sort: {date: 1, timeFrom: 1}}, (error: any, result: any) => {
+        Booking.find({user: req.body.userId, timeFrom: {$gte: req.body.date}}, null, {sort: {date: 1, timeFrom: 1}}, (error: any, result: any) => {
             //Devuelve el resultado
             if (result != null) {
                 res.json({

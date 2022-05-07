@@ -7,6 +7,7 @@ interface FacilityInterface {
     name?: string,
     country?: string,
     state?: string,
+    types?: number[],
     latitude?: number,
     longitude?: number
 }
@@ -17,6 +18,7 @@ class FacilityClass implements FacilityInterface {
     name?: string;
     country?: string;
     state?: string;
+    types?: number[];
     latitude?: number;
     longitude?: number;
 }
@@ -26,6 +28,7 @@ const facilitySchema = new mongoose.Schema({
     name: {type: String},
     country: {type: String},
     state: {type: String},
+    types: {type: [Number]},
     latitude: {type: Number},
     longitude: {type: Number}
 }, {timestamps: {createdAt: 'created_at', updatedAt: 'update_at'}});
