@@ -88,8 +88,9 @@ export class UserService {
                             "successData": {
                                 "_id": result._id,
                                 "email": result.email,
-                                "username": result.username,
-                                "token": token
+                                "username": result.email,
+                                "token": token,
+                                "admin": result.admin
                             },
                             "error": false
                         }

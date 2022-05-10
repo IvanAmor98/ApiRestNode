@@ -8,7 +8,8 @@ interface UserInterface {
     username?: string,
     password?: string,
     isGoogleAccount?: boolean,
-    googleId?: string
+    googleId?: string,
+    admin?: boolean
 }
 
 //Declara la clase
@@ -19,6 +20,7 @@ class UserClass implements UserInterface {
     password?: string;
     isGoogleAccount?: boolean;
     googleId?: string;
+    admin?: boolean;
 }
 
 //Declara el esquema
@@ -27,7 +29,8 @@ const userSchema = new mongoose.Schema({
     username: {type: String},
     password: {type: String},
     isGoogleAccount: {type: Boolean},
-    googleId: {type: String}
+    googleId: {type: String},
+    admin: {type: Boolean},
 }, {timestamps: {createdAt: 'created_at', updatedAt: 'update_at'}});
 
 //Asigna la clase al equema creado
