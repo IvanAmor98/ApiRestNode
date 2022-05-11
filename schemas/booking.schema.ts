@@ -10,7 +10,8 @@ export interface BookingInterface {
     type?: number,
     timeFrom?: number,
     timeTo?: number,
-    paid?: boolean
+    paid?: boolean,
+    checked?: boolean
 }
 
 //Declara la clase
@@ -23,6 +24,7 @@ class BookingClass implements BookingInterface {
     timeFrom?: number;
     timeTo?: number;
     paid?: boolean;
+    checked?: boolean;
 }
 
 //Declara el esquema
@@ -33,7 +35,8 @@ const bookingSchema = new mongoose.Schema({
     type: {type: Number},
     timeFrom: {type: Number},
     timeTo: {type: Number},
-    paid: {type: Boolean}
+    paid: {type: Boolean},
+    checked: {type: Boolean}
 }, {timestamps: {createdAt: 'created_at', updatedAt: 'update_at'}});
 
 //Asigna la clase al equema creado
