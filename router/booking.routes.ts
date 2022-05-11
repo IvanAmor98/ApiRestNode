@@ -28,3 +28,7 @@ bookingRouter.post('/deleteById', verifyToken, (req, res) => {
 bookingRouter.post('/updatePaidById', verifyToken, (req, res) => {
     bookingService.updatePaidById(req, res).catch(err => console.log(err));
 });
+
+bookingRouter.post('/updateCheckedById', verifyToken, (req, res) => {
+    bookingService.updateCheckedById(req, res).catch(err => console.log(err));
+});

@@ -132,4 +132,30 @@ export class BookingService {
             }
         });
     }
+
+    //Marca como empezada la reserva con el id especificado
+    //Se llama cuando un usuario admin lee el codigo qr de la reserva
+    public async updateCheckedById(req: any, res: any) {
+        Booking.findOneAndUpdate({_id: req.body._id}, {$set: { checked: true }}, (error: any, result: any) => {
+            if (error) {
+                //Control de errores
+                console.log(error);
+                res.json({
+                    "result": {
+                        "updated": false,
+                        "errorData": error
+                    }
+                });
+            } 
+            //Devuelve resultado
+            if (result) {
+                res.json({
+                    "result": {
+                        "updated": true,
+                        "resultData": result
+                    }
+                });
+            }
+        });
+    }
 }
