@@ -14,7 +14,8 @@ export class UserService {
             email: req.body.email,
             username: req.body.username,
             password: req.body.password,
-            isGoogleAccount: false
+            isGoogleAccount: false,
+            admin: false
         });
 
         //Comprueba si existe un usuario con el mismo email

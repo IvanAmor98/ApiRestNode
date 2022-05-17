@@ -13,15 +13,19 @@ export class BookingService {
             type: req.body.type,
             timeFrom: req.body.timeFrom,
             timeTo: req.body.timeTo,
-            paid: req.body.paid
+            paid: req.body.paid,
+            checked: false
         });
 
         //Lo guarda en la base de datos
         Booking.create(newBooking).then(
             //Si no hay problemas devuelve Ok
-            succes => {
+            result => {
                 res.json({
-                    "result": {"success": true}
+                    "result": {
+                        "_id": result.id,
+                        "success": true
+                    }
                 });
             }, 
             //Si hay algun error lo devuelve
