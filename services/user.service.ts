@@ -1,11 +1,11 @@
 import { User } from './../schemas'
 import jwt from 'jsonwebtoken';
 import { OAuth2Client } from 'google-auth-library';
+import { Keys } from './../keys';
 
 export class UserService {
-
     //Inicializa el cliente de autenticacion de google
-    client = new OAuth2Client('398083326352-15014911vi45dfqc5c6v29q6ut5hc8cm.apps.googleusercontent.com');
+    client = new OAuth2Client(Keys.CLIENT_ID);
 
     //Regitra un nuevo usuario en la base de datos
     public async addUser(req: any, res: any) {
@@ -175,7 +175,7 @@ export class UserService {
         //Pide al cliente de google que verifique el token
         const ticket = await this.client.verifyIdToken({
             idToken: googleToken,
-            audience: '398083326352-mcce8uhaf9golv4h6avm65uneijtljt7.apps.googleusercontent.com',
+            audience: Keys.CLIENT_ID
         });
         
         //Si existe un payload lo devuelvo
