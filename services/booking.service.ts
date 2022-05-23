@@ -43,7 +43,7 @@ export class BookingService {
     }
 
     public async getReservedTimes(req: any, res: any) {
-        Booking.find({timeFrom: {$gte: req.body.from, $lte: req.body.to}, type: req.body.type}, (error: any, result: any) => {
+        Booking.find({_id: req.body._id, timeFrom: {$gte: req.body.from, $lte: req.body.to}, type: req.body.type}, (error: any, result: any) => {
             if (result != null) {
                 const times: [Number, Number][] = [];
                 result.forEach((element: BookingInterface) => {
